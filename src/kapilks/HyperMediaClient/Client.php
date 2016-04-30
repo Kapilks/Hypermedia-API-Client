@@ -1,7 +1,16 @@
-<?php 
+<?php
+
+	namespace kapilks\HyperMediaClient;
 	
+
 	include_once 'URITemplate.php';
 	include_once 'HttpRequest.php';
+
+	use kapilks\HyperMediaClient\HttpRequest;
+	use kapilks\HyperMediaClient\URITemplate;
+	use \ArrayAccess;
+	use \Closure;
+	
 
 	/**
 	* Client
@@ -75,7 +84,12 @@
 				{
 					// Attribute
 					$attributeName = $this->createMemberName_($key);
-					$this->{$attributeName} = $data;
+
+					// Recursively build object from array type
+					if(is_array($data))
+						$this->{$attributeName} = new Client($data);
+					else
+						$this->{$attributeName} = $data;
 
 					array_push($allAttribute, $attributeName);
 				}
@@ -85,7 +99,7 @@
 					$methodName = $this->createMemberName_($key);
 					$methodBody = function() use ($data)
 					{
-						echo "$data\n";
+						//echo "$data\n";
 
 						$args = func_get_args()[0];
 						$data = URITemplate::expand($data, $args);
@@ -93,7 +107,7 @@
 						return new Client($data);
 					};
 
-					$allMethod[$methodName] = \Closure::bind($methodBody, $this, get_class());
+					$allMethod[$methodName] = Closure::bind($methodBody, $this, get_class());
 				}
 			}
 
@@ -132,7 +146,7 @@
 
 						$methodBody = function() use ($target)
 						{
-							echo "$target\n";
+							//echo "$target\n";
 
 							$args = func_get_args()[0];
 							$data = URITemplate::expand($target, $args);
@@ -140,7 +154,7 @@
 							return new Client($data);
 						};
 
-						$this->methods_[$action] = \Closure::bind($methodBody, $this, get_class());
+						$this->methods_[$action] = Closure::bind($methodBody, $this, get_class());
 					}
 				}				
 			}
