@@ -3,8 +3,8 @@
 	namespace kapilks\HyperMediaClient;
 	
 
-	include_once 'URITemplate.php';
-	include_once 'HttpRequest.php';
+	require_once 'URITemplate.php';
+	require_once 'HttpRequest.php';
 
 	use kapilks\HyperMediaClient\HttpRequest;
 	use kapilks\HyperMediaClient\URITemplate;
