@@ -1,5 +1,8 @@
 <?php
 	
+	namespace kapilks\HyperMediaClient;
+
+	
 	/**
 	*	Class to send GET request to server 
 	*/

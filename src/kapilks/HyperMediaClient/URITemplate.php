@@ -1,5 +1,10 @@
 <?php
 	
+	namespace kapilks\HyperMediaClient;
+
+	/**
+	*	Class to expand URI template by replacing parameter supplied 
+	*/
 	class URITemplate
 	{
 		private static $glueChar = array("?" => "&", 
